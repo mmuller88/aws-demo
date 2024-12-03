@@ -44,8 +44,8 @@ npx cdk deploy
 ## Connect to RDS
 
 ```bash
-INSTANCE=
-ENDPOINT=
+INSTANCE=i-03b3b80794bb91296
+ENDPOINT=awsdemostack-databaseb269d8bb-chjer1oo2ode.c3mmk408cu5t.us-east-1.rds.amazonaws.com
 
 aws ssm start-session \
     --target "$INSTANCE" \
@@ -55,3 +55,14 @@ aws ssm start-session \
 ```
 
 ## Cost
+
+The estimated monthly cost for running this AWS infrastructure is approximately $59.21. This includes:
+
+- **EC2 Instances**: $12.10
+- **RDS Instance**: $12.41
+- **NAT Gateway**: $32.40
+- **RDS Storage**: $2.30
+
+Please note that these are estimated costs and actual costs may vary based on usage and AWS pricing changes.
+
+Use <https://calculator.aws/#/> to calculate costs for different configurations.
