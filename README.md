@@ -1,14 +1,57 @@
-# Welcome to your CDK TypeScript project
+# aws-demo
 
-This is a blank project for CDK development with TypeScript.
+## Getting Started
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html
 
-## Useful commands
+## Architecture
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+```mermaid
+graph TB
+    Internet((Internet))
+
+    subgraph vpc[VPC]
+        subgraph public[Public Subnet]
+            WebServer[Web Server]
+            NAT[NAT Gateway]
+        end
+
+        subgraph private[Private Subnet]
+            Bastion[Bastion Host]
+            RDS[(RDS PostgreSQL)]
+        end
+    end
+
+    Internet --> vpc
+    NAT --> private
+    WebServer -- Port 5432 --> RDS
+    Bastion -- Port 5432 --> RDS
+    Internet --> WebServer
+```
+
+## Bootstrap
+
+```bash
+npx cdk bootstrap
+```
+
+## Deploy
+
+```bash
+npx cdk deploy
+```
+
+## Connect to RDS
+
+```bash
+INSTANCE=
+ENDPOINT=
+
+aws ssm start-session \
+    --target "$INSTANCE" \
+    --document-name "AWS-StartPortForwardingSessionToRemoteHost" \
+    --parameters "portNumber=5432,localPortNumber=5432,host=$ENDPOINT" \
+    --region "us-east-1"
+```
+
+## Cost
