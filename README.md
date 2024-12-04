@@ -10,7 +10,7 @@ https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html
 graph TB
     Internet((Internet))
 
-    subgraph vpc[VPC]
+    subgraph vpc[AWS VPC]
         subgraph public[Public Subnet]
             WebServer[Web Server]
             NAT[NAT Gateway]
